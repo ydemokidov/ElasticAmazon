@@ -1,0 +1,10 @@
+PUT _ingest/pipeline/datascience-books-transform
+{
+  "processors": [
+    {
+      "script": {
+        "source": "if(ctx['star5']!='')\r\n{\r\n  String starWithoutPercent = ctx['star5'].replace('%','');\r\n  int starInt = Integer.parseInt(starWithoutPercent);\r\n  float starFloat = starInt;\r\n  starFloat = starFloat / 100;\r\n  ctx['star5float'] = starFloat;\r\n}else{\r\n  ctx['star5float'] = 0.0;\r\n}\r\n\r\nif(ctx['star4']!='')\r\n{\r\n  String starWithoutPercent = ctx['star4'].replace('%','');\r\n  int starInt = Integer.parseInt(starWithoutPercent);\r\n  float starFloat = starInt;\r\n  starFloat = starFloat / 100;\r\n  ctx['star4float'] = starFloat;\r\n}else{\r\n  ctx['star4float'] = 0.0;\r\n}\r\n\r\nif(ctx['star3']!='')\r\n{\r\n  String starWithoutPercent = ctx['star3'].replace('%','');\r\n  int starInt = Integer.parseInt(starWithoutPercent);\r\n  float starFloat = starInt;\r\n  starFloat = starFloat / 100;\r\n  ctx['star3float'] = starFloat;\r\n}else{\r\n  ctx['star3float'] = 0.0;\r\n}\r\n\r\nif(ctx['star2']!='')\r\n{\r\n  String starWithoutPercent = ctx['star2'].replace('%','');\r\n  int starInt = Integer.parseInt(starWithoutPercent);\r\n  float starFloat = starInt;\r\n  starFloat = starFloat / 100;\r\n  ctx['star2float'] = starFloat;\r\n}else{\r\n  ctx['star2float'] = 0.0;\r\n}\r\n\r\nif(ctx['star1']!='')\r\n{\r\n  String starWithoutPercent = ctx['star1'].replace('%','');\r\n  int starInt = Integer.parseInt(starWithoutPercent);\r\n  float starFloat = starInt;\r\n  starFloat = starFloat / 100;\r\n  ctx['star1float'] = starFloat;\r\n}else{\r\n  ctx['star1float'] = 0.0;\r\n}"
+      }
+    }
+  ]
+}
