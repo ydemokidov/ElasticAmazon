@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Document(indexName = "amazon_datascience_books")
+@Setting(settingPath = "/settings.json")
 public class Book implements Serializable {
 
     @Field
@@ -86,6 +88,21 @@ public class Book implements Serializable {
 
     @CsvBindByName(column = "complete_link")
     String completeLink;
+
+    @Field(type = FieldType.Float)
+    Float star5float;
+
+    @Field(type = FieldType.Float)
+    Float star4float;
+
+    @Field(type = FieldType.Float)
+    Float star3float;
+
+    @Field(type = FieldType.Float)
+    Float star2float;
+
+    @Field(type = FieldType.Float)
+    Float star1float;
 
     @Override
     public String toString() {
