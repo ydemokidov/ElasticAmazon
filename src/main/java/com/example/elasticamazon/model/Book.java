@@ -14,6 +14,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -104,8 +105,8 @@ public class Book implements Serializable {
     @Field(type = FieldType.Float)
     Float star1float;
 
-    @Field(type = FieldType.Nested)
-    List<BookStock> bookStocksData;
+    @Field(type = FieldType.Object)
+    List<BookStock> bookStocksData = new ArrayList<>();
 
     @Override
     public String toString() {

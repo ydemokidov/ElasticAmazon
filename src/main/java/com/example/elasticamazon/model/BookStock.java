@@ -12,15 +12,16 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @NoArgsConstructor
 public class BookStock {
 
+    @Field
     @CsvBindByName(column = "ISBN_13")
-    private String ISBN13;
+    private String ISBN_13;
 
-    @CsvBindByName(column = "cityId")
     @Field(type = FieldType.Integer)
+    @CsvBindByName(column = "cityId")
     private Integer cityId;
 
-    @CsvBindByName(column = "stockNr")
     @Field(type = FieldType.Integer)
+    @CsvBindByName(column = "stockNr")
     private Integer stockNumber;
 
 }

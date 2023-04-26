@@ -46,11 +46,17 @@ public class DataService {
 
     private void updateBookStocksData(@NotNull final BookStock bookStock){
         executorService.submit(()->{
-            Optional<Book> bookOptional = bookRepository.findByISBN13(bookStock.getISBN13());
-            if (bookOptional.isPresent()) {
-                final Book book = bookOptional.get();
-                book.getBookStocksData().add(bookStock);
-                bookRepository.save(book);
+            try {
+                Optional<Book> bookOptional = bookRepository.findByISBN13(bookStock.getISBN_13());
+                if (bookOptional.isPresent()) {
+                    final Book book = bookOptional.get();
+                    log.info("Book " + book.getISBN13() + " found");
+                    book.getBookStocksData().add(bookStock);
+                    bookRepository.save(book);
+                    log.info("Book " + book.getISBN13() + " saved");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
     }
