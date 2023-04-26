@@ -15,7 +15,7 @@ public class BookStock {
     @CsvBindByName(column = "ISBN_13")
     private String ISBN13;
 
-    @CsvBindByName
+    @CsvBindByName(column = "cityId")
     @Field(type = FieldType.Integer)
     private Integer cityId;
 

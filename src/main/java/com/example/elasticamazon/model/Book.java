@@ -28,7 +28,7 @@ public class Book implements Serializable {
     @CsvCustomBindByName(column = "author",converter = BookAuthorsConverter.class)
     List<String> authors;
 
-    @Field(type = FieldType.Text)
+    @Id
     @CsvBindByName
     String title;
 
@@ -79,7 +79,7 @@ public class Book implements Serializable {
     @CsvBindByName
     String publisher;
 
-    @Id
+    @Field
     @CsvBindByName(column = "ISBN_13")
     String ISBN13;
 
