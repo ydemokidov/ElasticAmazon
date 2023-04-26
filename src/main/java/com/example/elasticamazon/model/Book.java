@@ -28,7 +28,7 @@ public class Book implements Serializable {
     @CsvCustomBindByName(column = "author",converter = BookAuthorsConverter.class)
     List<String> authors;
 
-    @Id
+    @Field(type = FieldType.Text)
     @CsvBindByName
     String title;
 
@@ -79,7 +79,7 @@ public class Book implements Serializable {
     @CsvBindByName
     String publisher;
 
-    @Field(type = FieldType.Keyword)
+    @Id
     @CsvBindByName(column = "ISBN_13")
     String ISBN13;
 
@@ -103,6 +103,9 @@ public class Book implements Serializable {
 
     @Field(type = FieldType.Float)
     Float star1float;
+
+    @Field(type = FieldType.Nested)
+    List<BookStock> bookStocksData;
 
     @Override
     public String toString() {
