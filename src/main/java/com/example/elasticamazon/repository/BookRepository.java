@@ -8,7 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends ElasticsearchRepository<Book, String> {
-
     Optional<Book> findByISBN13(String isbn13);
 
 }

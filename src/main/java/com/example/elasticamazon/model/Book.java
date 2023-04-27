@@ -76,7 +76,7 @@ public class Book implements Serializable {
     @Field(type = FieldType.Keyword)
     String language;
 
-    @Field
+    @Field(type = FieldType.Keyword)
     @CsvBindByName
     String publisher;
 

@@ -1,0 +1,17 @@
+POST /amazon_datascience_books/_search
+{
+  "aggs": {
+    "group_by_language": {
+      "terms": {
+        "field": "language"
+      },
+      "aggs": {
+        "group_by_publisher": {
+          "terms": {
+            "field": "publisher"
+          }
+        }
+      }
+    }
+  }
+}
