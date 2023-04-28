@@ -1,6 +1,7 @@
 package com.example.elasticamazon.controller;
 
 import com.example.elasticamazon.model.dto.AvgReviewsByPublisher;
+import com.example.elasticamazon.model.dto.BookSByPublisher;
 import com.example.elasticamazon.model.dto.PublishersByLanguageResult;
 import com.example.elasticamazon.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class SearchController {
     @GetMapping("/reviews")
     public AvgReviewsByPublisher findReviewsByPublisher() throws IOException {
         return searchService.getReviewsByPublisher();
+    }
+
+    @GetMapping("/books")
+    public BookSByPublisher getBooksFilteredByPagesWithMaxScoreByPublisher() throws IOException {
+        return searchService.getBooksFilteredByPagesWithMaxScoreByPublisher();
     }
 
 }

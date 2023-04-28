@@ -1,0 +1,34 @@
+POST /amazon_datascience_books/_search
+{
+  "size": 0,
+  "aggs": {
+    "publishers": {
+      "terms": {
+        "field": "publisher"
+      },
+      "aggs": {
+        "filtered_docs": {
+          "filter": {
+            "range": {
+              "pages": {
+                "lt": 300
+              }
+            }
+          },
+          "aggs": {
+            "max_score": {
+              "max": {
+                "field": "star5float"
+              }
+            },
+      			"group_by_title": {
+      				"terms": {
+      				"field": "title.keyword"
+      				}
+      			}
+          }
+        }
+      }
+    }
+  }
+}
