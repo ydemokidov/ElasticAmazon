@@ -12,6 +12,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class AvgReviewsByPublisher {
 
-    private Map<String,Double> reviewsByPublisher = new HashMap<>();
+    private Map<String, Double> reviewsByPublisher = new HashMap<>();
 
 }

@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class PublishersByLanguageResult {
 
-    private Map<String,List<String>> publishersByLanguage = new HashMap<>();
+    private Map<String, List<String>> publishersByLanguage = new HashMap<>();
 
 }

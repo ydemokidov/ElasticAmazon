@@ -18,7 +18,7 @@ public class DataController {
     }
 
     @GetMapping("/populate")
-    public void populate(){
+    public void populate() {
         dataService.populateData();
     }
 

@@ -39,13 +39,13 @@ public class DataService {
         this.bookRepository = bookRepository;
     }
 
-    public void populateData(){
+    public void populateData() {
         processBooksCsv();
         processBookStockCsv();
     }
 
-    private void updateBookStocksData(@NotNull final BookStock bookStock){
-        executorService.submit(()->{
+    private void updateBookStocksData(@NotNull final BookStock bookStock) {
+        executorService.submit(() -> {
             try {
                 Optional<Book> bookOptional = bookRepository.findByISBN13(bookStock.getISBN_13());
                 if (bookOptional.isPresent()) {
@@ -55,17 +55,17 @@ public class DataService {
                     bookRepository.save(book);
                     log.info("Book " + book.getISBN13() + " saved");
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
 
-    private void processBooksCsv(){
-        try(final InputStream is = datafileResource.getInputStream();
-            final InputStreamReader isReader = new InputStreamReader(is);
-            final BufferedReader bufferedReader = new BufferedReader(isReader)){
-            final CsvToBean<Book> csvToBean  = new CsvToBeanBuilder<Book>(bufferedReader)
+    private void processBooksCsv() {
+        try (final InputStream is = datafileResource.getInputStream();
+             final InputStreamReader isReader = new InputStreamReader(is);
+             final BufferedReader bufferedReader = new BufferedReader(isReader)) {
+            final CsvToBean<Book> csvToBean = new CsvToBeanBuilder<Book>(bufferedReader)
                     .withType(Book.class)
                     .withSeparator(',')
                     .withQuoteChar('\"')
@@ -77,11 +77,11 @@ public class DataService {
         }
     }
 
-    private void processBookStockCsv(){
-        try(final InputStream is = stockDatafileResource.getInputStream();
-            final InputStreamReader isReader = new InputStreamReader(is);
-            final BufferedReader bufferedReader = new BufferedReader(isReader)){
-            final CsvToBean<BookStock> csvToBean  = new CsvToBeanBuilder<BookStock>(bufferedReader)
+    private void processBookStockCsv() {
+        try (final InputStream is = stockDatafileResource.getInputStream();
+             final InputStreamReader isReader = new InputStreamReader(is);
+             final BufferedReader bufferedReader = new BufferedReader(isReader)) {
+            final CsvToBean<BookStock> csvToBean = new CsvToBeanBuilder<BookStock>(bufferedReader)
                     .withType(BookStock.class)
                     .withSeparator(',')
                     .build();

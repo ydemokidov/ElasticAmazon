@@ -13,6 +13,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class BookSByPublisher {
 
-    private Map<String,Map<Double, List<String>>> booksByPublishers = new HashMap<>();
+    private Map<String, Map<Double, List<String>>> booksByPublishers = new HashMap<>();
 
 }

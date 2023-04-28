@@ -22,13 +22,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(indexName = "amazon_datascience_books")
 @Setting(settingPath = "/settings.json")
 public class Book implements Serializable {
 
     @Field
-    @CsvCustomBindByName(column = "author",converter = BookAuthorsConverter.class)
+    @CsvCustomBindByName(column = "author", converter = BookAuthorsConverter.class)
     List<String> authors;
 
     @Id
@@ -39,7 +39,7 @@ public class Book implements Serializable {
     @CsvBindByName
     Float price;
     @Field
-    @CsvCustomBindByName(column = "pages",converter = BookPagesConverter.class)
+    @CsvCustomBindByName(column = "pages", converter = BookPagesConverter.class)
     Integer pages;
 
     @Field
