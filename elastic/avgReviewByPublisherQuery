@@ -7,7 +7,7 @@ POST /amazon_datascience_books/_search
 				"field": "publisher"
 			},
 			"aggs": {
-				"avg_book_review_agg": {
+				"avg_book_reviews_agg": {
 					"avg": {
 						"field": "avgReviews"
 					}
