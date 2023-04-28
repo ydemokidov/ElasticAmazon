@@ -1,5 +1,7 @@
 package com.example.elasticamazon.model;
 
+import com.example.elasticamazon.model.csv.BookAuthorsConverter;
+import com.example.elasticamazon.model.csv.BookPagesConverter;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 import lombok.AccessLevel;

@@ -1,4 +1,4 @@
-package com.example.elasticamazon.model;
+package com.example.elasticamazon.model.csv;
 
 import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
