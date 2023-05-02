@@ -9,7 +9,7 @@ import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.json.JsonData;
 import com.example.elasticamazon.model.Book;
 import com.example.elasticamazon.model.dto.AvgReviewsByPublisher;
-import com.example.elasticamazon.model.dto.BookSByPublisher;
+import com.example.elasticamazon.model.dto.BooksByPublisher;
 import com.example.elasticamazon.model.dto.PublishersByLanguageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,20 +38,16 @@ public class SearchService {
         final String groupByLanguage = "group_by_language";
         final String groupByPublisher = "group_by_publisher";
 
-        final Map<String, Aggregation> aggregationsMap = new HashMap<>();
-
         final Aggregation publishersSubAggregation = buildTermsAggregation("publisher");
 
         final Aggregation languageAggregation = buildTermsAggregationWithSubAggregation("language",
                 groupByPublisher,
                 publishersSubAggregation);
 
-        aggregationsMap.put(groupByLanguage, languageAggregation);
-
         final SearchRequest searchRequest = new SearchRequest.Builder()
                 .index(index)
                 .size(0)
-                .aggregations(aggregationsMap)
+                .aggregations(Map.of(groupByLanguage, languageAggregation))
                 .build();
 
         final SearchResponse<Book> response = elasticsearchClient.search(searchRequest, Book.class);
@@ -89,20 +84,16 @@ public class SearchService {
         final String avgReviews = "avg_book_reviews_agg";
         final String groupByPublisher = "group_by_publisher";
 
-        final Map<String, Aggregation> aggregationsMap = new HashMap<>();
-
         final Aggregation avgReviewsSubAggregation = buildAvgAggregation("avgReviews");
 
         final Aggregation publishersAggregation = buildTermsAggregationWithSubAggregation("publisher",
                 avgReviews,
                 avgReviewsSubAggregation);
 
-        aggregationsMap.put(groupByPublisher, publishersAggregation);
-
         final SearchRequest searchRequest = new SearchRequest.Builder()
                 .index(index)
                 .size(0)
-                .aggregations(aggregationsMap)
+                .aggregations(Map.of(groupByPublisher, publishersAggregation))
                 .build();
         final SearchResponse<Book> response = elasticsearchClient.search(searchRequest, Book.class);
 
@@ -125,7 +116,7 @@ public class SearchService {
         return result;
     }
 
-    public BookSByPublisher getBooksFilteredByPagesWithMaxScoreByPublisher() throws IOException {
+    public BooksByPublisher getBooksFilteredByPagesWithMaxScoreByPublisher() throws IOException {
         final String maxScore = "maxStar5Score";
         final String groupByTitle = "group_by_title";
         final String groupByPublisher = "group_by_publisher";
@@ -137,10 +128,7 @@ public class SearchService {
 
         final Aggregation publishersAggregation = new Aggregation.Builder()
                 .terms(new TermsAggregation.Builder().field("publisher").build())
-                .aggregations(new HashMap<>() {{
-                    put(maxScore, maxScoreSubAggregation);
-                    put(groupByTitle, titleSubAggregation);
-                }}).build();
+                .aggregations(Map.of(maxScore, maxScoreSubAggregation,groupByTitle, titleSubAggregation)).build();
 
         final SearchRequest searchRequest = new SearchRequest.Builder()
                 .index(index)
@@ -154,7 +142,7 @@ public class SearchService {
         final StringTermsAggregate byPublisher = response.aggregations().get(groupByPublisher).sterms();
         final List<StringTermsBucket> aggregatedByPublisherBuckets = byPublisher.buckets().array();
 
-        final BookSByPublisher result = new BookSByPublisher();
+        final BooksByPublisher result = new BooksByPublisher();
 
         aggregatedByPublisherBuckets.forEach(byPublisherBucket -> {
             log.info(byPublisherBucket.toString());
@@ -165,8 +153,7 @@ public class SearchService {
                     get(groupByTitle).sterms().buckets().array();
 
             titleBuckets.forEach(titleBucket -> titles.add(titleBucket.key().stringValue()));
-            final Map<Double, List<String>> titlesByScoreMap = new HashMap<>();
-            titlesByScoreMap.put(maxStar5Score, titles);
+            final Map<Double, List<String>> titlesByScoreMap = Map.of(maxStar5Score,titles);
 
             result.getBooksByPublishers().put(publisher, titlesByScoreMap);
 
@@ -198,9 +185,7 @@ public class SearchService {
                                                                 @NotNull final Aggregation subAggregation) {
         return new Aggregation.Builder()
                 .terms(new TermsAggregation.Builder().field(fieldName).build())
-                .aggregations(new HashMap<>() {{
-                    put(subAggregationName, subAggregation);
-                }}).build();
+                .aggregations(Map.of(subAggregationName, subAggregation)).build();
     }
 
 }
