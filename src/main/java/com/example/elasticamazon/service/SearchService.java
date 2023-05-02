@@ -128,7 +128,7 @@ public class SearchService {
 
         final Aggregation publishersAggregation = new Aggregation.Builder()
                 .terms(new TermsAggregation.Builder().field("publisher").build())
-                .aggregations(Map.of(maxScore, maxScoreSubAggregation,groupByTitle, titleSubAggregation)).build();
+                .aggregations(Map.of(maxScore, maxScoreSubAggregation, groupByTitle, titleSubAggregation)).build();
 
         final SearchRequest searchRequest = new SearchRequest.Builder()
                 .index(index)
@@ -153,7 +153,7 @@ public class SearchService {
                     get(groupByTitle).sterms().buckets().array();
 
             titleBuckets.forEach(titleBucket -> titles.add(titleBucket.key().stringValue()));
-            final Map<Double, List<String>> titlesByScoreMap = Map.of(maxStar5Score,titles);
+            final Map<Double, List<String>> titlesByScoreMap = Map.of(maxStar5Score, titles);
 
             result.getBooksByPublishers().put(publisher, titlesByScoreMap);
 
