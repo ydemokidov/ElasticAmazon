@@ -11,7 +11,7 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BookSByPublisher {
+public class BooksByPublisher {
 
     private Map<String, Map<Double, List<String>>> booksByPublishers = new HashMap<>();
 
